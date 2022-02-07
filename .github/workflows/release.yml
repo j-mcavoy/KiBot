@@ -2,15 +2,6 @@ name: release
 
 on:
   push:
-    tags-ignore:
-      - "v1"
-      - "v1_k6"
-      - "v2"
-      - "v2_k6"
-      - "v3"
-      - "v3_k6"
-      - "v4"
-      - "v4_k6"
 
 jobs:
   check:
@@ -38,7 +29,6 @@ jobs:
     runs-on: ubuntu-latest
     container: setsoft/kicad_pybuild:latest
     needs: check
-    if: ${{ needs.check.outputs.is_tag == 'yes' }}
     outputs:
       deb_name: ${{ steps.mdeb.outputs.deb_name }}
 
@@ -89,4 +79,3 @@ jobs:
           DOCKER_TRIGGER: ${{ secrets.DOCKER_TRIGGER }}
         run: |
           curl -X POST $DOCKER_TRIGGER
-
